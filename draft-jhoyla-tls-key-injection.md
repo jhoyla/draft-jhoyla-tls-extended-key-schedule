@@ -1,11 +1,11 @@
 ---
-title: TLS Key Injection 
+title: TLS Key Injection
 docname: draft-jhoyla-tls-key-injection
-category: standard
+category: std
 
 ipr: trust200902
 area: Security
-workgroup: TLS Working Group
+workgroup: jhoyla
 keyword: Internet-Draft
 
 stand_alone: yes
@@ -27,8 +27,8 @@ informative:
 
 --- abstract
 
-TLS is sometimes used in situations where it is necessary to inject extra key material into the handshake. This draft aims to describe some methods for doing so securely. 
-This key material must be injected in such a way that both parties agree on what is being injected and why, and further in what order. 
+TLS is sometimes used in situations where it is necessary to inject extra key material into the handshake. This draft aims to describe some methods for doing so securely.
+This key material must be injected in such a way that both parties agree on what is being injected and why, and further in what order.
 
 --- middle
 
