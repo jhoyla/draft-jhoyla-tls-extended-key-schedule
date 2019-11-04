@@ -105,7 +105,7 @@ may be included.
   struct {
     opaque external_identity<1...2^16-1>;
     opaque context<0...2^16>;
-  } PSKIDWithAdditionalData
+  } PSKIDWithAdditionalData;
 ~~~
 
 external_identity
@@ -159,7 +159,7 @@ separation of the key schedule from vanilla TLS handshakes, because HKDFs
 can be assumed to ensure that keys derived with different labels are
 independent.
 
-# Key Schedule Injection Structure
+# Key Schedule Extension Structure
 
 In some cases, protocols may require more than one secret to be injected at a particular
 stage in the key schedule. Thus, we require a generic and extensible way of doing so.
