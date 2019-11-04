@@ -65,11 +65,32 @@ data authenticated by the TLS channel. This can be used to bind a protocol to a
 specific TLS handshake, giving joint authentication guarantees.
 In a similar way, one may wish to introduce externally authenticated and 
 pre-shared data to the early secret derivation. This can be used to bind external 
-protocols to the TLS protocol. To achieve this, one can follow the procedure defined 
-in {{!I-D.ietf-tls-external-psk-importer}} to add a special external PSK to the protocol. 
-This process gives authentication guarantees to both the protocol being bound and TLS.
+protocols to the TLS protocol. 
 
-[[TODO: if the external PSK draft does not modify the label, we may need to do so here.]]
+To achieve this, pre-shared keys modify the binder key computation. This is
+needed since it ensures that both parties agree on both the authenticated 
+data and the context in which it was used.
+
+The binder key computation change is as follows:
+
+~~~
+             0
+             |
+             v
+   PSK ->  HKDF-Extract = Early Secret
+             |
+             +-----> Derive-Secret(., "ext binder"
+             |                      | "res binder"
+             |                      | "imp ext binder", "")
+             |                     = binder_key
+             v
+~~~
+
+Use of the "imp ext binder" label implies that both parties agree that there is
+some context that has been agreed, and that they are using an external PSK.
+This assumes the PSK has some mechanism by which additional context is included.
+{{!I-D.ietf-tls-external-psk-importer}} describes one way by which such context
+may be included.
 
 ## Handshake Secret Injection
 
