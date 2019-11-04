@@ -60,9 +60,16 @@ the TLS 1.3 key schedule.
 
 ## Early Secret Injection
 
-To bind one protocol to another you can use the procedure defined in {{!I-D.ietf-tls-external-psk-importer}} 
-to add a special external PSK to the protocol. This process gives authentication guarantees to both 
-the protocol being bound and TLS.
+TLS provides exporter keys that allow for other protocols to provide
+data authenticated by the TLS channel. This can be used to bind a protocol to a
+specific TLS handshake, giving joint authentication guarantees.
+In a similar way, one may wish to introduce externally authenticated and 
+pre-shared data to the early secret derivation. This can be used to bind external 
+protocols to the TLS protocol. To achieve this, one can follow the procedure defined 
+in {{!I-D.ietf-tls-external-psk-importer}} to add a special external PSK to the protocol. 
+This process gives authentication guarantees to both the protocol being bound and TLS.
+
+[[TODO: if the external PSK draft does not modify the label, we may need to do so here.]]
 
 ## Handshake Secret Injection
 
@@ -125,16 +132,13 @@ key schedule Input value, the KeyScheduleSecret values MUST be in ascending sort
 ensures that endpoints always encode the same KeyScheduleInput value when using the same
 secret keying material.
 
-
 # Security Considerations
 
 [[OPEN ISSUE: This draft has not seen any security analysis.]]
 
-
 # IANA Considerations
 
 [[TODO: define secret registry structure]]
-
 
 --- back
 
