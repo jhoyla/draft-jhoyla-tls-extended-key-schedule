@@ -13,7 +13,7 @@ pi: [toc, sortrefs, symrefs]
 
 author:
  -
-    ins: "J Hoyland"
+    ins: "J. Hoyland"
     name: "Jonathan Hoyland"
     organization: "Cloudflare Ltd."
     email: jonathan.hoyland@gmail.com
@@ -55,17 +55,72 @@ when, and only when, they appear in all capitals, as shown here.
 
 # PSK Injection
 
-To bind one protocol to another you can use the procedure defined in
-{{EPSKI}} to add a special PSK to the protocol. This
-process gives authentication guarantees to both the protocol being bound and
-TLS.
+TLS provides exporter keys that allow for other protocols to provide
+data authenticated by the TLS channel. This can be used to bind a protocol to a
+specific TLS handshake, giving joint authentication guarantees.
+
+In a similar way, this mechanism describes a way to introduce externally
+authenticated data to a TLS handshake.  To add additional authenticated data
+into the protocol you can modify the binder computation. Adding data that has
+been authenticated outside the TLS protocol allows the client to add
+authentication guarantees to the TLS handshake beyond those directly provided.
+In particular this can be used to bind external protocols to the TLS protocol.
+For example if two parties have a shared PSK, but have not agreed a hash
+algorithm then this process can be used to ensure agreement on the hash
+algorithm before the TLS handshake completes, and further to ensure that both
+parties agree on the selected hash algorithm.
+
+The change to the binder key computation is necessary because otherwise one
+party may believe it has agreed on some authenticated data, but the other
+party may believe that it is simply using a vanilla PSK, and be unaware of the
+extra context implied.
+
+~~~
+             0
+             |
+             v
+   PSK ->  HKDF-Extract = Early Secret
+             |
+             +-----> Derive-Secret(., "ext binder"
+             |                      | "res binder"
+             |                      | "imp ext binder"
+             |                      | "imp res binder", "")
+             |                     = binder_key
+~~~
+
+Using the "imp ext binder" label implies that both parties agree that there is
+some context that has been agreed, and that they are using an external PSK.
+Using the "imp res binder" label implies that both parties agree that there is
+some context that has been agreed, and that they are using a resumptionn PSK.
+
+The use of the imp binder derivations means that the PSK ID MUST have an opaque
+context field.
+For example, a PSK with additional data could be constructed as follows.
+
+~~~
+  struct {
+    opaque external_identity<1...2^16-1>;
+    opaque context<0...2^16>;
+  } PSKIDWithAdditionalData
+~~~
+
+external_identity
+: is the PSK_ID that would be used when no additional data is present
+
+context
+: contains the additional data
+
+
+If this additional data is a channel binding for a channel, `c`, then this
+structure SHOULD bind the TLS handshake to `c`, giving combined authentication
+guarantees.
 
 # Additional Derive Secret
 
-To add confidentiality guarantees to the ClientHello using PSK binders is
-insufficient. This is because cut-and-paste attacks are still possible on the
-ClientHello. Even though the handshake will fail, information in the
-ClientHello may still be exposed.
+To add confidentiality guarantees to the ClientHello using PSK binder injection
+is insufficient. This is because cut-and-paste attacks are still possible on the
+ClientHello. Even though such attacks may cause the handshake to fail, they may
+still leak information in the ClientHello.
 
 To inject key material into the Handshake Secret it is recommended to use an
 extra derive secret.
