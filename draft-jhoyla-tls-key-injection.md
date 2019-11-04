@@ -1,6 +1,6 @@
 ---
-title: TLS 1.3 Key Schedule Injection
-docname: draft-jhoyla-tls-key-injection
+title: TLS 1.3 Extended Key Schedule
+docname: draft-jhoyla-tls-extended-key-schedule
 category: std
 
 ipr: trust200902
@@ -12,11 +12,16 @@ stand_alone: yes
 pi: [toc, sortrefs, symrefs]
 
 author:
- -
+  -
     ins: J. Hoyland
     name: Jonathan Hoyland
     organization: Cloudflare Ltd.
     email: jonathan.hoyland@gmail.com
+  -
+    ins: C. A. Wood
+    name: Christopher A. Wood
+    organization: Apple, Inc.
+    email: cawood@apple.com
 
 normative:
   RFC2119:
@@ -24,27 +29,28 @@ normative:
 
 --- abstract
 
-TLS 1.3 is sometimes used in situations where it is necessary to inject extra key
-material into the handshake. This draft aims to describe methods for doing
-so securely.  This key material must be injected in such a way that both parties
+TLS 1.3 is sometimes used in situations where it is necessary to inject extra
+key material into the handshake. This draft aims to describe methods for doing
+so securely. This key material must be injected in such a way that both parties
 agree on what is being injected and why, and further, in what order.
 
 --- middle
 
 # Introduction
 
-Injecting key material into the TLS handshake is a non-trivial process because
-both parties need to agree on the injection content and context.  If the two
-parties do not agree then an attacker may exploit the mismatch in so-called channel
-synchronization attacks.
+Introducing additional key material into the TLS handshake is a non-trivial
+process because both parties need to agree on the injection content and context.
+If the two parties do not agree then an attacker may exploit the mismatch in
+so-called channel synchronization attacks.
 
 Injecting key material into the TLS handshake allows other protocols to be bound
-to the handshake. For example, it may provide additional protections to the ClientHello
-message, which in the standard TLS handshake only receives protections after the
-server's Finished message has been received. It may also permit the use of
-combined shared secrets, possibly from multiple key exchange algorithms, to be
-included in the key schedule. This pattern is common for Post Quantum key exchange
-algorithms, as discussed in {{?I-D.stebila-tls-hybrid-design}}.
+to the handshake. For example, it may provide additional protections to the
+ClientHello message, which in the standard TLS handshake only receives
+protections after the server's Finished message has been received. It may also
+permit the use of combined shared secrets, possibly from multiple key exchange
+algorithms, to be included in the key schedule. This pattern is common for Post
+Quantum key exchange algorithms, as discussed in
+{{?I-D.stebila-tls-hybrid-design}}.
 
 # Conventions and Definitions
 
@@ -53,19 +59,19 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 document are to be interpreted as described in BCP 14 {{RFC2119}} {{!RFC8174}}
 when, and only when, they appear in all capitals, as shown here.
 
-# Key Schedule Injection
+# Key Schedule Extension
 
-This section describes ways in which additional secrets can be injected into
+This section describes two ways in which additional secrets can be injected into
 the TLS 1.3 key schedule.
 
 ## Early Secret Injection
 
-TLS provides exporter keys that allow for other protocols to provide
-data authenticated by the TLS channel. This can be used to bind a protocol to a
-specific TLS handshake, giving joint authentication guarantees.
-In a similar way, one may wish to introduce externally authenticated and
-pre-shared data to the early secret derivation. This can be used to bind external
-protocols to the TLS protocol.
+TLS provides exporter keys that allow for other protocols to provide data
+authenticated by the TLS channel. This can be used to bind a protocol to a
+specific TLS handshake, giving joint authentication guarantees. In a similar
+way, one may wish to introduce externally authenticated and pre-shared data to
+the early secret derivation. This can be used to bind TLS to an external
+protocol.
 
 To achieve this, pre-shared keys modify the binder key computation. This is
 needed since it ensures that both parties agree on both the authenticated
@@ -102,8 +108,24 @@ may be included.
   } PSKIDWithAdditionalData
 ~~~
 
+external_identity
+: is the `PSK_ID` that would have been used if the additional data were not
+agreed upon.
+
+context
+: is an opaque value that is bound to the agreed upon additional data.
+
 Those using the "imp ext binder" or "imp res binder" label MUST include a
-context field, to allow the additional data.
+`context` field, to allow the additional data.
+
+Note that this structure is recursive. If this mechanism is used multiple times
+then the `external_identity` field will contain previous contexts in sequential
+order. If the client does not know in advance which pieces of additional data
+the server will be willing to agree on, it can provide multiple binders with
+different subsets of the additional data. The server can then select a binder
+with which it is willing to proceed. The binders MUST be verified in an
+all-or-nothing manner, and only one binder SHOULD be checked. A server MUST NOT
+accept a binder for which it only agrees upon some of the data.
 
 ## Handshake Secret Injection
 
@@ -141,7 +163,7 @@ independent.
 
 In some cases, protocols may require more than one secret to be injected at a particular
 stage in the key schedule. Thus, we require a generic and extensible way of doing so.
-To accomplish this, we use a structure --  KeyScheduleInput -- that encodes well-ordered
+To accomplish this, we use a structure -- KeyScheduleInput -- that encodes well-ordered
 sequences of secret material to inject into the key schedule. KeyScheduleInput is defined
 as follows:
 
@@ -178,5 +200,4 @@ secret keying material.
 
 # Acknowledgments
 {:numbered="false"}
-
-TODO acknowledge.
+We thank Karthik Bhargavan for his comments.
