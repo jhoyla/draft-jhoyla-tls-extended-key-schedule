@@ -1,10 +1,10 @@
-# TLS Key Injection
+# TLS 1.3 Extended Key Schedule
 
-This is the working area for the individual Internet-Draft, "TLS Key Injection".
+This is the working area for the individual Internet-Draft, "TLS 1.3 Extended Key Schedule".
 
-* [Editor's Copy](https://jhoyla.github.io/draft-jhoyla-tls-key-injection/#go.draft-jhoyla-tls-key-injection.html)
-* [Individual Draft](https://tools.ietf.org/html/draft-jhoyla-tls-key-injection)
-* [Compare Editor's Copy to Individual Draft](https://jhoyla.github.io/draft-jhoyla-tls-key-injection/#go.draft-jhoyla-tls-key-injection.diff)
+* [Editor's Copy](https://jhoyla.github.io/draft-jhoyla-tls-extended-key-schedule/#go.draft-jhoyla-tls-extended-key-schedule.html)
+* [Individual Draft](https://tools.ietf.org/html/draft-jhoyla-tls-extended-key-schedule)
+* [Compare Editor's Copy to Individual Draft](https://jhoyla.github.io/draft-jhoyla-tls-extended-key-schedule/#go.draft-jhoyla-tls-extended-key-schedule.diff)
 
 ## Building the Draft
 
@@ -21,4 +21,4 @@ This requires that you have the necessary software installed.  See
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/jhoyla/draft-jhoyla-tls-key-injection/blob/master/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/blob/master/CONTRIBUTING.md).
