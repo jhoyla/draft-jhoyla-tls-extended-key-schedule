@@ -35,14 +35,14 @@ agree on what is being injected and why, and further, in what order.
 
 Injecting key material into the TLS handshake is a non-trivial process because
 both parties need to agree on the injection content and context.  If the two
-parties do not agree then an attacker may exploit the mismatch in so-called channel 
+parties do not agree then an attacker may exploit the mismatch in so-called channel
 synchronization attacks.
 
 Injecting key material into the TLS handshake allows other protocols to be bound
-to the handshake. For example, it may provide additional protections to the ClientHello 
-message, which in the standard TLS handshake only receives protections after the 
-server's Finished message has been received. It may also permit the use of 
-combined shared secrets, possibly from multiple key exchange algorithms, to be 
+to the handshake. For example, it may provide additional protections to the ClientHello
+message, which in the standard TLS handshake only receives protections after the
+server's Finished message has been received. It may also permit the use of
+combined shared secrets, possibly from multiple key exchange algorithms, to be
 included in the key schedule. This pattern is common for Post Quantum key exchange
 algorithms, as discussed in {{?I-D.stebila-tls-hybrid-design}}.
 
@@ -63,12 +63,12 @@ the TLS 1.3 key schedule.
 TLS provides exporter keys that allow for other protocols to provide
 data authenticated by the TLS channel. This can be used to bind a protocol to a
 specific TLS handshake, giving joint authentication guarantees.
-In a similar way, one may wish to introduce externally authenticated and 
-pre-shared data to the early secret derivation. This can be used to bind external 
-protocols to the TLS protocol. 
+In a similar way, one may wish to introduce externally authenticated and
+pre-shared data to the early secret derivation. This can be used to bind external
+protocols to the TLS protocol.
 
 To achieve this, pre-shared keys modify the binder key computation. This is
-needed since it ensures that both parties agree on both the authenticated 
+needed since it ensures that both parties agree on both the authenticated
 data and the context in which it was used.
 
 The binder key computation change is as follows:
@@ -81,16 +81,29 @@ The binder key computation change is as follows:
              |
              +-----> Derive-Secret(., "ext binder"
              |                      | "res binder"
-             |                      | "imp ext binder", "")
+             |                      | "imp ext binder"
+             |                      | "imp res binder", "")
              |                     = binder_key
              v
 ~~~
 
 Use of the "imp ext binder" label implies that both parties agree that there is
 some context that has been agreed, and that they are using an external PSK.
+Use of the "imp res binder" label implies that both parties agree that there is
+some context that has been agreed, and that they are using an resumption PSK.
 This assumes the PSK has some mechanism by which additional context is included.
 {{!I-D.ietf-tls-external-psk-importer}} describes one way by which such context
 may be included.
+
+~~~
+  struct {
+    opaque external_identity<1...2^16-1>;
+    opaque context<0...2^16>;
+  } PSKIDWithAdditionalData
+~~~
+
+Those using the "imp ext binder" or "imp res binder" label MUST include a
+context field, to allow the additional data.
 
 ## Handshake Secret Injection
 
@@ -126,10 +139,10 @@ independent.
 
 # Key Schedule Injection Structure
 
-In some cases, protocols may require more than one secret to be injected at a particular 
+In some cases, protocols may require more than one secret to be injected at a particular
 stage in the key schedule. Thus, we require a generic and extensible way of doing so.
-To accomplish this, we use a structure --  KeyScheduleInput -- that encodes well-ordered 
-sequences of secret material to inject into the key schedule. KeyScheduleInput is defined 
+To accomplish this, we use a structure --  KeyScheduleInput -- that encodes well-ordered
+sequences of secret material to inject into the key schedule. KeyScheduleInput is defined
 as follows:
 
 ~~~
@@ -149,7 +162,7 @@ struct {
 
 Each secret included in a KeyScheduleInput structure has a type and corresponding secret data.
 Each secret MUST have a unique KeyScheduleSecretType. When encoding KeyScheduleInput as the
-key schedule Input value, the KeyScheduleSecret values MUST be in ascending sorted order. This 
+key schedule Input value, the KeyScheduleSecret values MUST be in ascending sorted order. This
 ensures that endpoints always encode the same KeyScheduleInput value when using the same
 secret keying material.
 
