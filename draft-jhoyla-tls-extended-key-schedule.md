@@ -61,71 +61,8 @@ when, and only when, they appear in all capitals, as shown here.
 
 # Key Schedule Extension
 
-This section describes two ways in which additional secrets can be injected into
+This section describes two places in which additional secrets can be injected into
 the TLS 1.3 key schedule.
-
-## Early Secret Injection
-
-TLS provides exporter keys that allow for other protocols to provide data
-authenticated by the TLS channel. This can be used to bind a protocol to a
-specific TLS handshake, giving joint authentication guarantees. In a similar
-way, one may wish to introduce externally authenticated and pre-shared data to
-the early secret derivation. This can be used to bind TLS to an external
-protocol.
-
-To achieve this, pre-shared keys modify the binder key computation. This is
-needed since it ensures that both parties agree on both the authenticated
-data and the context in which it was used.
-
-The binder key computation change is as follows:
-
-~~~
-             0
-             |
-             v
-   PSK ->  HKDF-Extract = Early Secret
-             |
-             +-----> Derive-Secret(., "ext binder"
-             |                      | "res binder"
-             |                      | "imp ext binder"
-             |                      | "imp res binder", "")
-             |                     = binder_key
-             v
-~~~
-
-Use of the "imp ext binder" label implies that both parties agree that there is
-some context that has been agreed, and that they are using an external PSK.
-Use of the "imp res binder" label implies that both parties agree that there is
-some context that has been agreed, and that they are using an resumption PSK.
-This assumes the PSK has some mechanism by which additional context is included.
-{{!I-D.ietf-tls-external-psk-importer}} describes one way by which such context
-may be included.
-
-~~~
-  struct {
-    opaque external_identity<1...2^16-1>;
-    opaque context<0...2^16>;
-  } PSKIDWithAdditionalData;
-~~~
-
-external_identity
-: is the `PSK_ID` that would have been used if the additional data were not
-agreed upon.
-
-context
-: is an opaque value that is bound to the agreed upon additional data.
-
-Those using the "imp ext binder" or "imp res binder" label MUST include a
-`context` field, to allow the additional data.
-
-Note that this structure is recursive. If this mechanism is used multiple times
-then the `external_identity` field will contain previous contexts in sequential
-order. If the client does not know in advance which pieces of additional data
-the server will be willing to agree on, it can provide multiple binders with
-different subsets of the additional data. The server can then select a binder
-with which it is willing to proceed. The binders MUST be verified in an
-all-or-nothing manner, and only one binder SHOULD be checked. A server MUST NOT
-accept a binder for which it only agrees upon some of the data.
 
 ## Handshake Secret Injection
 
@@ -144,7 +81,7 @@ extra derive secret.
        Derive-Secret(., "derived", "")
              |
              v
-   (EC)DHE -> HKDF-Extract = Handshake Secret
+  (EC)DHE -> HKDF-Extract = Handshake Secret
              |
              v
 ~~~
@@ -158,6 +95,32 @@ The additional Derive-Secret with the "derived early" label enforces the
 separation of the key schedule from vanilla TLS handshakes, because HKDFs
 can be assumed to ensure that keys derived with different labels are
 independent.
+
+##Master Secret Injection
+
+To inject key material into the Master Secret it is recommended to use an extra
+derive secret.
+
+~~~
+             |
+             v
+       Derive-Secret(., "derived early", "")
+             |
+             v
+    Input -> HKDF-Extract
+             |
+             v
+       Derive-Secret(., "derived", "")
+             |
+             v
+    0 -> HKDF-Extract = Master Secret
+             |
+             v
+~~~
+
+This structrue mirrors the Handshake Injection point, the key schedule has an
+extra Extract, Derive-Secret pattern.  This, again, should isolate the Input
+material from the rest of the Master Secret. 
 
 # Key Schedule Extension Structure
 
