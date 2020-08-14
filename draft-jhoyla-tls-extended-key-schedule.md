@@ -20,11 +20,15 @@ author:
   -
     ins: C. A. Wood
     name: Christopher A. Wood
-    organization: Apple, Inc.
-    email: cawood@apple.com
+    organization: Cloudflare
+    email: chriswood@cloudflare.com
 
 normative:
   RFC2119:
+
+informative:
+
+  BINDEL: DOI.10.1007/978-3-030-25510-7_12
 
 
 --- abstract
@@ -66,35 +70,20 @@ the TLS 1.3 key schedule.
 
 ## Handshake Secret Injection
 
-To inject key material into the Handshake Secret it is recommended to use an
-extra derive secret.
+To inject extra key material into the Handshake Secret it is recommended to prefix it, inside an appropriate frame, to the `(EC)DHE` input, where `||` represents concatenation.
 
 ~~~
-             |
-             v
-       Derive-Secret(., "derived early", "")
-             |
-             v
-    Input -> HKDF-Extract
-             |
-             v
-       Derive-Secret(., "derived", "")
-             |
-             v
-  (EC)DHE -> HKDF-Extract = Handshake Secret
-             |
-             v
+                      |
+                      v
+                Derive-Secret(., "derived", "")
+                      |
+                      v
+  Input || (EC)DHE -> HKDF-Extract = Handshake Secret
+                      |
+                      v
 ~~~
 
-As shown in the figure above, the key schedule has an extra derive secret and
-HKDF-Extract step. This extra step isolates the Input material from the rest of
-the handshake secret, such that even maliciously chosen values cannot weaken the
-security of the key schedule overall.
-
-The additional Derive-Secret with the "derived early" label enforces the
-separation of the key schedule from vanilla TLS handshakes, because HKDFs
-can be assumed to ensure that keys derived with different labels are
-independent.
+[BINDEL] provides a proof that this construction is secure as long as either the concatenated secret is secure or the PSK is secure. [[Is this guarantee sufficient? Do we also need to guarantee that a malicious prefix can't weaken the resulting PRF output?]]
 
 ##Master Secret Injection
 
@@ -102,25 +91,17 @@ To inject key material into the Master Secret it is recommended to use an extra
 derive secret.
 
 ~~~
-             |
-             v
-       Derive-Secret(., "derived early", "")
-             |
-             v
-    Input -> HKDF-Extract
-             |
-             v
-       Derive-Secret(., "derived", "")
-             |
-             v
-    0 -> HKDF-Extract = Master Secret
-             |
-             v
+                 |
+                 v
+           Derive-Secret(., "derived", "")
+                 |
+                 v
+   Input || 0 -> HKDF-Extract = Master Secret
+                 |
+                 v
 ~~~
 
-This structrue mirrors the Handshake Injection point, the key schedule has an
-extra Extract, Derive-Secret pattern.  This, again, should isolate the Input
-material from the rest of the Master Secret. 
+This structure mirrors the Handshake Injection point, and is also supported by [BINDEL]
 
 # Key Schedule Extension Structure
 
