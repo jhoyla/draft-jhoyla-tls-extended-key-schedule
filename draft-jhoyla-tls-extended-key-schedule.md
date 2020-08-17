@@ -135,7 +135,7 @@ secret keying material.
 # Security Considerations
 
 [BINDEL] provides a proof that the concatenation approach in {{injection}} is secure as long as
-either the concatenated secret is secure or the existing (legacy) KDF input is secure.
+either the concatenated secret is secure or the existing KDF input is secure.
 
 [[OPEN ISSUE: Is this guarantee sufficient? Do we also need to guarantee that a malicious prefix can't weaken the resulting PRF output?]]
 
