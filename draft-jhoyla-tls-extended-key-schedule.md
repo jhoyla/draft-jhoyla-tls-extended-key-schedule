@@ -21,7 +21,7 @@ author:
     ins: C. A. Wood
     name: Christopher A. Wood
     organization: Cloudflare
-    email: chriswood@cloudflare.com
+    email: caw@heapingbits.net
 
 normative:
   RFC2119:
@@ -45,7 +45,8 @@ agree on what is being injected and why, and further, in what order.
 Introducing additional key material into the TLS handshake is a non-trivial
 process because both parties need to agree on the injection content and context.
 If the two parties do not agree then an attacker may exploit the mismatch in
-so-called channel synchronization attacks.
+so-called channel synchronization attacks, such as those described by
+{{?SLOTH=DOI.10.14722/ndss.2016.23418}}.
 
 Injecting key material into the TLS handshake allows other protocols to be bound
 to the handshake. For example, it may provide additional protections to the
@@ -54,7 +55,7 @@ protections after the server's Finished message has been received. It may also
 permit the use of combined shared secrets, possibly from multiple key exchange
 algorithms, to be included in the key schedule. This pattern is common for Post
 Quantum key exchange algorithms, as discussed in
-{{?I-D.stebila-tls-hybrid-design}}.
+{{?I-D.ietf-tls-hybrid-design}}.
 
 # Conventions and Definitions
 
@@ -63,45 +64,44 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 document are to be interpreted as described in BCP 14 {{RFC2119}} {{!RFC8174}}
 when, and only when, they appear in all capitals, as shown here.
 
-# Key Schedule Extension
+# Key Schedule Extension {#injection}
 
 This section describes two places in which additional secrets can be injected into
 the TLS 1.3 key schedule.
 
 ## Handshake Secret Injection
 
-To inject extra key material into the Handshake Secret it is recommended to prefix it, inside an appropriate frame, to the `(EC)DHE` input, where `||` represents concatenation.
+To inject extra key material into the Handshake Secret it is recommended to prefix it, inside
+an appropriate frame, to the `(EC)DHE` input, where `||` represents concatenation.
 
 ~~~
-                      |
-                      v
-                Derive-Secret(., "derived", "")
-                      |
-                      v
-  Input || (EC)DHE -> HKDF-Extract = Handshake Secret
-                      |
-                      v
+                                 |
+                                 v
+                           Derive-Secret(., "derived", "")
+                                 |
+                                 v
+  KeyScheduleInput || (EC)DHE -> HKDF-Extract = Handshake Secret
+                                 |
+                                 v
 ~~~
 
-[BINDEL] provides a proof that this construction is secure as long as either the concatenated secret is secure or the PSK is secure. [[Is this guarantee sufficient? Do we also need to guarantee that a malicious prefix can't weaken the resulting PRF output?]]
+## Main Secret Injection
 
-##Master Secret Injection
-
-To inject key material into the Master Secret it is recommended to use an extra
-derive secret.
+To inject key material into the Main Secret it is recommended to prefix it, inside
+an appropriate frame, to the `0` input.
 
 ~~~
-                 |
-                 v
-           Derive-Secret(., "derived", "")
-                 |
-                 v
-   Input || 0 -> HKDF-Extract = Master Secret
-                 |
-                 v
+                           |
+                           v
+                     Derive-Secret(., "derived", "")
+                           |
+                           v
+  KeyScheduleInput || 0 -> HKDF-Extract = Main Secret
+                           |
+                           v
 ~~~
 
-This structure mirrors the Handshake Injection point, and is also supported by [BINDEL]
+This structure mirrors the Handshake Injection point.
 
 # Key Schedule Extension Structure
 
@@ -134,11 +134,22 @@ secret keying material.
 
 # Security Considerations
 
-[[OPEN ISSUE: This draft has not seen any security analysis.]]
+[BINDEL] provides a proof that the concatenation approach in {{injection}} is secure as long as
+either the concatenated secret is secure or the existing (legacy) KDF input is secure.
+
+[[OPEN ISSUE: Is this guarantee sufficient? Do we also need to guarantee that a malicious prefix can't weaken the resulting PRF output?]]
 
 # IANA Considerations
 
-[[TODO: define secret registry structure]]
+This document requests the creation of a new IANA registry: TLS KeyScheduleInput Types.
+This registry should be under the existing Transport Layer Security (TLS) Parameters
+heading. It should be administered under a Specification Required policy {{!RFC8126}}.
+
+[[OPEN ISSUE: specify initial registry values]]
+
+| Value  | Description      | DTLS-OK | Reference |
+|:-------|:-----------------|:--------|:----------|
+| TBD    | TBD              | TBD     | TBD       |
 
 --- back
 
