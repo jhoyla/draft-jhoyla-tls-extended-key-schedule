@@ -109,8 +109,10 @@ This structure mirrors the Handshake Injection point.
 Applications which make use of additional key schedule inputs MUST define an
 extension that negotiates the content and type of that input.  This input MUST
 be framed in a KeyScheduleSecret struct, as defined in {{structure}}.
-Applications must take care that the negotiation of the content of the secret
-inputs unambiguously defines a single input.
+Applications must take care that any negotiation that takes place unambiguously
+agrees a secret. It must be impossible, even under adversarial conditions, that
+a client and server agree on the transcript of the negotiation, but disagree on
+the secret that was negotiated.
 
 # Key Schedule Extension Structure {#structure}
 
