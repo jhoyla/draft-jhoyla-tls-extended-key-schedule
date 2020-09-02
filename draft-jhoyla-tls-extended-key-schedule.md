@@ -66,13 +66,14 @@ when, and only when, they appear in all capitals, as shown here.
 
 # Key Schedule Extension {#injection}
 
-This section describes two places in which additional secrets can be injected into
-the TLS 1.3 key schedule.
+This section describes two places in which additional secrets can be injected
+into the TLS 1.3 key schedule.
 
 ## Handshake Secret Injection
 
-To inject extra key material into the Handshake Secret it is recommended to prefix it, inside
-an appropriate frame, to the `(EC)DHE` input, where `||` represents concatenation.
+To inject extra key material into the Handshake Secret it is recommended to
+prefix it, inside an appropriate frame, to the `(EC)DHE` input, where `||`
+represents concatenation.
 
 ~~~
                                  |
@@ -87,8 +88,8 @@ an appropriate frame, to the `(EC)DHE` input, where `||` represents concatenatio
 
 ## Main Secret Injection
 
-To inject key material into the Main Secret it is recommended to prefix it, inside
-an appropriate frame, to the `0` input.
+To inject key material into the Main Secret it is recommended to prefix it,
+inside an appropriate frame, to the `0` input.
 
 ~~~
                            |
@@ -103,13 +104,23 @@ an appropriate frame, to the `0` input.
 
 This structure mirrors the Handshake Injection point.
 
-# Key Schedule Extension Structure
+# Key Schedule Injection Negotiation
 
-In some cases, protocols may require more than one secret to be injected at a particular
-stage in the key schedule. Thus, we require a generic and extensible way of doing so.
-To accomplish this, we use a structure -- KeyScheduleInput -- that encodes well-ordered
-sequences of secret material to inject into the key schedule. KeyScheduleInput is defined
-as follows:
+Applications which make use of additional key schedule inputs MUST define a
+mechanism for negotiating the content and type of that input.  This input MUST
+be framed in a KeyScheduleSecret struct, as defined in {{structure}}.
+Applications must take care that any negotiation that takes place unambiguously
+agrees a secret. It must be impossible, even under adversarial conditions, that
+a client and server agree on the transcript of the negotiation, but disagree on
+the secret that was negotiated.
+
+# Key Schedule Extension Structure {#structure}
+
+In some cases, protocols may require more than one secret to be injected at a
+particular stage in the key schedule. Thus, we require a generic and extensible
+way of doing so.  To accomplish this, we use a structure -- KeyScheduleInput --
+that encodes well-ordered sequences of secret material to inject into the key
+schedule. KeyScheduleInput is defined as follows:
 
 ~~~
 struct {
@@ -126,16 +137,18 @@ struct {
 } KeyScheduleInput;
 ~~~
 
-Each secret included in a KeyScheduleInput structure has a type and corresponding secret data.
-Each secret MUST have a unique KeyScheduleSecretType. When encoding KeyScheduleInput as the
-key schedule Input value, the KeyScheduleSecret values MUST be in ascending sorted order. This
-ensures that endpoints always encode the same KeyScheduleInput value when using the same
-secret keying material.
+Each secret included in a KeyScheduleInput structure has a type and
+corresponding secret data.  Each secret MUST have a unique
+KeyScheduleSecretType. When encoding KeyScheduleInput as the key schedule Input
+value, the KeyScheduleSecret values MUST be in ascending sorted order. This
+ensures that endpoints always encode the same KeyScheduleInput value when using
+the same secret keying material.
 
 # Security Considerations
 
-[BINDEL] provides a proof that the concatenation approach in {{injection}} is secure as long as
-either the concatenated secret is secure or the existing KDF input is secure.
+[BINDEL] provides a proof that the concatenation approach in {{injection}} is
+secure as long as either the concatenated secret is secure or the existing KDF
+input is secure.
 
 [[OPEN ISSUE: Is this guarantee sufficient? Do we also need to guarantee that a malicious prefix can't weaken the resulting PRF output?]]
 
