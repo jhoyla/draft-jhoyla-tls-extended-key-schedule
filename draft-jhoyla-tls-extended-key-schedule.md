@@ -57,6 +57,14 @@ algorithms, to be included in the key schedule. This pattern is common for Post
 Quantum key exchange algorithms, as discussed in
 {{?I-D.ietf-tls-hybrid-design}}.
 
+The goal of this document is to provide a standardised way for binding extra
+context into TLS 1.3 handshakes in a way that is easy to analyse from a security
+perspective, reducing the need for repeated security analyses for every
+extension and combination of extensions. It separates the concerns of whether an
+extension achieves its goals from the concerns of whether an extension reduces
+the security of a TLS handshake, either directly or through some unforseen
+interaction with another extension.
+
 # Conventions and Definitions
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
