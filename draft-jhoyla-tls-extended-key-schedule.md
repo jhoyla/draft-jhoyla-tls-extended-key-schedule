@@ -59,11 +59,11 @@ Quantum key exchange algorithms, as discussed in
 
 The goal of this document is to provide a standardised way for binding extra
 context into TLS 1.3 handshakes in a way that is easy to analyse from a security
-perspective, reducing the need for repeated security analyses for every
-extension and combination of extensions. It separates the concerns of whether an
-extension achieves its goals from the concerns of whether an extension reduces
-the security of a TLS handshake, either directly or through some unforseen
-interaction with another extension.
+perspective, reducing the need for security analysis of extensions that affect
+the key schedule. It separates the concerns of whether an extension achieves its
+goals from the concerns of whether an extension reduces the security of a TLS
+handshake, either directly or through some unforseen interaction with another
+extension.
 
 # Conventions and Definitions
 
