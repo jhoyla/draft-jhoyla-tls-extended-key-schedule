@@ -1,0 +1,342 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2020-09-02T12:49:45.694214+00:00",
+  "repo": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 2,
+      "id": "MDU6SXNzdWU2NjcyNjg5NzA=",
+      "title": "Add motivation concerning security analysis to introduction for greater context",
+      "url": "https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/issues/2",
+      "state": "OPEN",
+      "author": "cbartle891",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I thought that Jonathan's explanation in the IETF 108 TLS meeting that this is a generic version of draft-ietf-tls-hybrid-design-00 in order to simplify security analysis really shed light on the motivation behind this draft and would be really helpful context in the introduction.",
+      "createdAt": "2020-07-28T18:09:09Z",
+      "updatedAt": "2020-07-28T18:09:09Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "MDExOlB1bGxSZXF1ZXN0MzM2NDE3NDk2",
+      "title": "Add key schedule injection structure",
+      "url": "https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/pull/1",
+      "state": "MERGED",
+      "author": "chris-wood",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2019-11-04T18:30:26Z",
+      "updatedAt": "2019-11-04T20:17:57Z",
+      "baseRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "baseRefName": "master",
+      "baseRefOid": "db782bc268334cf86e808418b8fbe3ab7b47181d",
+      "headRepository": "chris-wood/draft-jhoyla-tls-key-injection",
+      "headRefName": "caw/structure",
+      "headRefOid": "c9177111aab11d1aba0103be146f12083e590750",
+      "closedAt": "2019-11-04T20:17:57Z",
+      "mergedAt": "2019-11-04T20:17:57Z",
+      "mergedBy": "jhoyla",
+      "mergeCommit": {
+        "oid": "c9177111aab11d1aba0103be146f12083e590750"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzExMzEzNDI3",
+          "commit": {
+            "abbreviatedOid": "c917711"
+          },
+          "author": "jhoyla",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2019-11-04T19:43:43Z",
+          "updatedAt": "2019-11-04T19:51:47Z",
+          "comments": [
+            {
+              "originalPosition": 96,
+              "body": "I'm not sure this is quite sharp enough. A key aspect of the change to the binder key computation is the modification of the labels. ",
+              "createdAt": "2019-11-04T19:43:59Z",
+              "updatedAt": "2019-11-04T19:51:48Z"
+            },
+            {
+              "originalPosition": 79,
+              "body": "I'm wondering here if we should say \"bind TLS to the external protocol\". Bindings can have a direction (inward, outward, or both), and matching the order used in the previous sentence might stop people assuming that all bindings are from the external protocol to the TLS channel. But maybe I'm overthinking this. ",
+              "createdAt": "2019-11-04T19:47:07Z",
+              "updatedAt": "2019-11-04T19:51:48Z"
+            },
+            {
+              "originalPosition": 130,
+              "body": "We should include this struct. This should be the \"minimum requirement\". ",
+              "createdAt": "2019-11-04T19:49:41Z",
+              "updatedAt": "2019-11-04T19:51:48Z"
+            },
+            {
+              "originalPosition": 109,
+              "body": "To make this general we need to include the \"imp res binder\". In particular it's necessary if we want to use this structure for ESNI. ESNI can be used with either an external PSK or a resumption PSK, and we need to be able to distinguish those cases.",
+              "createdAt": "2019-11-04T19:51:15Z",
+              "updatedAt": "2019-11-04T19:51:48Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzExMzMwNjY5",
+          "commit": {
+            "abbreviatedOid": "c917711"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2019-11-04T20:14:42Z",
+          "updatedAt": "2019-11-04T20:14:42Z",
+          "comments": [
+            {
+              "originalPosition": 130,
+              "body": "Hmm... I'm not sure. I agree that there's some minimum requirement, but I think we can state that without giving a structure. ",
+              "createdAt": "2019-11-04T20:14:42Z",
+              "updatedAt": "2019-11-04T20:14:42Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDY4MDEyNDU5",
+      "title": "Move to Stebila key schedule.",
+      "url": "https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/pull/3",
+      "state": "MERGED",
+      "author": "jhoyla",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-08-14T14:23:01Z",
+      "updatedAt": "2020-08-17T18:12:09Z",
+      "baseRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "baseRefName": "main",
+      "baseRefOid": "6084ebd640cdea570ddc8b055b0ad7df743265b0",
+      "headRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "headRefName": "rev2",
+      "headRefOid": "6fde1f6bec85618730a653b56dd55a62dde711a8",
+      "closedAt": "2020-08-17T18:12:09Z",
+      "mergedAt": "2020-08-17T18:12:09Z",
+      "mergedBy": "jhoyla",
+      "mergeCommit": {
+        "oid": "434c97f486b00e88a8857c053ddac368a6803c38"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDY3NjE2Mzc5",
+          "commit": {
+            "abbreviatedOid": "6fde1f6"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-08-14T14:23:37Z",
+          "updatedAt": "2020-08-14T14:23:37Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDY4Njk1ODU5",
+          "commit": {
+            "abbreviatedOid": "6fde1f6"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-08-17T17:55:30Z",
+          "updatedAt": "2020-08-17T17:55:31Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\n    email: caw@heapingbits.net\r\n```",
+              "createdAt": "2020-08-17T17:55:31Z",
+              "updatedAt": "2020-08-17T17:55:31Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDY5MDc2NTM5",
+      "title": "Editorial and content pass.",
+      "url": "https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/pull/4",
+      "state": "MERGED",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-08-17T21:27:30Z",
+      "updatedAt": "2020-08-17T23:01:40Z",
+      "baseRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "baseRefName": "main",
+      "baseRefOid": "434c97f486b00e88a8857c053ddac368a6803c38",
+      "headRepository": "chris-wood/draft-jhoyla-tls-key-injection",
+      "headRefName": "caw/edits",
+      "headRefOid": "e07d1905c72a1cf19a1716ce1ea7b52b78d3d833",
+      "closedAt": "2020-08-17T23:01:40Z",
+      "mergedAt": "2020-08-17T23:01:40Z",
+      "mergedBy": "jhoyla",
+      "mergeCommit": {
+        "oid": "88f8320da4d5433ca5e029b19e5d1bc8d71614c4"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDY5MTEzMjUy",
+      "title": "Add requirement that secret inputs be negotiated.",
+      "url": "https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/pull/5",
+      "state": "OPEN",
+      "author": "jhoyla",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-08-17T23:16:36Z",
+      "updatedAt": "2020-09-02T12:48:57Z",
+      "baseRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "baseRefName": "main",
+      "baseRefOid": "88f8320da4d5433ca5e029b19e5d1bc8d71614c4",
+      "headRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "headRefName": "negotiation",
+      "headRefOid": "d5b95a3ce8599ad46ba017cc65b36c1d209c5e01",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDY5NjcwNDEx",
+          "commit": {
+            "abbreviatedOid": "497f26d"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2020-08-18T17:25:14Z",
+          "updatedAt": "2020-08-18T17:25:52Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "```suggestion\r\nApplications which make use of additional key schedule inputs MUST define a\r\nmechanism for negotiating the content and type of that input.  This input MUST\r\n```",
+              "createdAt": "2020-08-18T17:25:14Z",
+              "updatedAt": "2020-09-02T12:48:56Z"
+            },
+            {
+              "originalPosition": 46,
+              "body": "I didn't parse this -- does this mean that applications can only negotiate one secret input at a time?",
+              "createdAt": "2020-08-18T17:25:48Z",
+              "updatedAt": "2020-09-02T12:48:56Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDcwNDc3ODk2",
+          "commit": {
+            "abbreviatedOid": "497f26d"
+          },
+          "author": "jhoyla",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-08-19T13:51:09Z",
+          "updatedAt": "2020-08-19T13:51:09Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "No, this was terribly phrased. I meant that any given negotiation must have an unambiguous conclusion. It must be impossible even under adversarial conditions for the client and server to see the same extensions but believe they have negotiated different keys.",
+              "createdAt": "2020-08-19T13:51:09Z",
+              "updatedAt": "2020-09-02T12:48:57Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDcwNzY2NDI4",
+          "commit": {
+            "abbreviatedOid": "497f26d"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-08-19T19:20:51Z",
+          "updatedAt": "2020-08-19T19:20:51Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "Perhaps we can rephrase it as such?",
+              "createdAt": "2020-08-19T19:20:51Z",
+              "updatedAt": "2020-09-02T12:48:57Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
