@@ -40,7 +40,7 @@ agree on what is being injected and why, and further, in what order.
 
 --- middle
 
-# Introduction
+# Introduction {#intro}
 
 Introducing additional key material into the TLS handshake is a non-trivial
 process because both parties need to agree on the injection content and context.
@@ -55,12 +55,8 @@ protections after the server's Finished message has been received. It may also
 permit the use of combined shared secrets, possibly from multiple key exchange
 algorithms, to be included in the key schedule. This pattern is common for Post
 Quantum key exchange algorithms, as discussed in
-{{?I-D.ietf-tls-hybrid-design}}. {{?I-D.ietf-tls-hybrid-design}} uses the same
-pattern as described in this draft, but does not add the requisite framing.
-Making {{?I-D.ietf-tls-hybrid-design}} compliant with this design merely
-requires adding the 6-byte framing prefix to the key. Because the secret input
-is never sent on the wire neither side needs to parse it, it is constructed
-directly by both the client and server.
+{{?I-D.ietf-tls-hybrid-design}}. In particular, {{?I-D.ietf-tls-hybrid-design}} uses the
+concatenation pattern described in this draft, but does not add the requisite framing.
 
 The goal of this document is to provide a standardised way for binding extra
 context into TLS 1.3 handshakes in a way that is easy to analyse from a security
@@ -179,19 +175,18 @@ heading. It should be administered under a Specification Required policy {{!RFC8
 
 --- back
 
-# Sample Potential Use Cases
+# Potential Use Cases
 
-This structure can be used to implement a number of different effects naturally.
-The draft provides an importer interface that mirrors the exporter interface.
-This provides a way to layer TLS on to other protocols, as opposed to layering
-other protocols over TLS. This can be used for hybrid key exchanges, which, in
-effect, is layering TLS over a secondary AKE. Although the key exchanges are
-interleaved, the post-quantum AKE completes first, as demonstrated by its output
-key being used as an input for computing TLS's master secret.
+The draft provides a mechanism for importing additional information into the TLS key schedule.
+Future applications and specifications can use this mechanism to layer TLS on to other protocols,
+as opposed to layering other protocols over TLS. For example, as discussed in {{intro}}, this can
+be used for hybrid key exchange, which, in effect, is layering TLS over a secondary AKE.
+Although the key exchanges are interleaved, the post-quantum AKE completes first, as demonstrated
+by its output key being used as an input for computing TLS's master secret.
 
 This can also be used in more direct ways, such as bootstrapping EAP-TLS as in
 {{?I-D.friel-tls-eap-dpp}}. This draft also allows for more direct
-implementations of things such as semi-static DH. The aim of this draft is to be
+implementations of things such as semi-static DH {{?I-D.ietf-tls-semistatic-dh}}. The aim of this draft is to be
 sufficiently flexible that it can be used as the basis for layering TLS on top
 of any protocol that outputs a secure channel binding, where secure is defined
 by the goals of the overall layered protocol. This draft does not provide
