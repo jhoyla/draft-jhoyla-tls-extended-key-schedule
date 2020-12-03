@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-09-02T12:49:45.694214+00:00",
+  "timestamp": "2020-12-03T15:38:06.124715+00:00",
   "repo": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
   "labels": [
     {
@@ -55,16 +55,24 @@
       "id": "MDU6SXNzdWU2NjcyNjg5NzA=",
       "title": "Add motivation concerning security analysis to introduction for greater context",
       "url": "https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/issues/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "cbartle891",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I thought that Jonathan's explanation in the IETF 108 TLS meeting that this is a generic version of draft-ietf-tls-hybrid-design-00 in order to simplify security analysis really shed light on the motivation behind this draft and would be really helpful context in the introduction.",
       "createdAt": "2020-07-28T18:09:09Z",
-      "updatedAt": "2020-07-28T18:09:09Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2020-09-02T17:28:51Z",
+      "closedAt": "2020-09-02T17:19:12Z",
+      "comments": [
+        {
+          "author": "cbartle891",
+          "authorAssociation": "NONE",
+          "body": "Thanks!",
+          "createdAt": "2020-09-02T17:28:51Z",
+          "updatedAt": "2020-09-02T17:28:51Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -250,24 +258,26 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDY5MTEzMjUy",
       "title": "Add requirement that secret inputs be negotiated.",
       "url": "https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/pull/5",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jhoyla",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2020-08-17T23:16:36Z",
-      "updatedAt": "2020-09-02T12:48:57Z",
+      "updatedAt": "2020-09-02T13:03:46Z",
       "baseRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
       "baseRefName": "main",
       "baseRefOid": "88f8320da4d5433ca5e029b19e5d1bc8d71614c4",
       "headRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
       "headRefName": "negotiation",
       "headRefOid": "d5b95a3ce8599ad46ba017cc65b36c1d209c5e01",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2020-09-02T13:02:25Z",
+      "mergedAt": "2020-09-02T13:02:25Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "dc737b7063ad25b14fe3eb9522867f0bf23854c5"
+      },
       "comments": [],
       "reviews": [
         {
@@ -337,6 +347,74 @@
           ]
         }
       ]
+    },
+    {
+      "number": 6,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDc3ODcwMjIy",
+      "title": "Expand motivation text.",
+      "url": "https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/pull/6",
+      "state": "MERGED",
+      "author": "jhoyla",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-09-02T14:43:19Z",
+      "updatedAt": "2020-09-02T17:19:12Z",
+      "baseRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "baseRefName": "main",
+      "baseRefOid": "dc737b7063ad25b14fe3eb9522867f0bf23854c5",
+      "headRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "headRefName": "motivation",
+      "headRefOid": "2e41867e0b0a21896ddbff8779ec09f51ff22cd5",
+      "closedAt": "2020-09-02T17:19:12Z",
+      "mergedAt": "2020-09-02T17:19:12Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "551375367ed571f19e7cc161cecfd89ba7c524e8"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgxMDM3ODk0",
+          "commit": {
+            "abbreviatedOid": "2e41867"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-09-02T17:19:06Z",
+          "updatedAt": "2020-09-02T17:19:06Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTMxODcwNTgy",
+      "title": "Add more background.",
+      "url": "https://github.com/jhoyla/draft-jhoyla-tls-extended-key-schedule/pull/7",
+      "state": "OPEN",
+      "author": "jhoyla",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-12-03T15:31:16Z",
+      "updatedAt": "2020-12-03T15:37:16Z",
+      "baseRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "baseRefName": "main",
+      "baseRefOid": "551375367ed571f19e7cc161cecfd89ba7c524e8",
+      "headRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
+      "headRefName": "motivation",
+      "headRefOid": "8909753bcac39c620f911b958c6acf6fa885afe7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
