@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-03T15:38:06.124715+00:00",
+  "timestamp": "2020-12-04T00:06:48.763728+00:00",
   "repo": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
   "labels": [
     {
@@ -402,19 +402,70 @@
       "labels": [],
       "body": "",
       "createdAt": "2020-12-03T15:31:16Z",
-      "updatedAt": "2020-12-03T15:37:16Z",
+      "updatedAt": "2020-12-04T00:06:29Z",
       "baseRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
       "baseRefName": "main",
       "baseRefOid": "551375367ed571f19e7cc161cecfd89ba7c524e8",
       "headRepository": "jhoyla/draft-jhoyla-tls-extended-key-schedule",
       "headRefName": "motivation",
-      "headRefOid": "8909753bcac39c620f911b958c6acf6fa885afe7",
+      "headRefOid": "43745271483afd5bf1f632c2782eb3afb359b663",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTQ0MjIzMjAy",
+          "commit": {
+            "abbreviatedOid": "8909753"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Approved pending nits!",
+          "createdAt": "2020-12-03T17:50:29Z",
+          "updatedAt": "2020-12-03T18:08:26Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2020-12-03T17:58:58Z",
+              "updatedAt": "2020-12-04T00:06:29Z"
+            },
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\n{{?I-D.ietf-tls-hybrid-design}}. In particular, {{?I-D.ietf-tls-hybrid-design}} uses the\r\nconcatenation pattern described in this draft, but does not add the requisite framing.\r\n```",
+              "createdAt": "2020-12-03T18:00:00Z",
+              "updatedAt": "2020-12-04T00:06:29Z"
+            },
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\n# Potential Use Cases\r\n```",
+              "createdAt": "2020-12-03T18:00:09Z",
+              "updatedAt": "2020-12-04T00:06:29Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2020-12-03T18:00:15Z",
+              "updatedAt": "2020-12-04T00:06:29Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "This is a bit misleading. The exporter interface is, well, an actual interface. This document does not provide an *explicit* importer interface, but a way for other drafts to add those interfaces. I'd suggest:\r\n\r\n```suggestion\r\nThe draft provides a mechanism for importing additional information into the TLS key schedule.\r\nFuture applications and specifications can use this mechanism to layer TLS on to other protocols, \r\nas opposed to layering other protocols over TLS. For example, as discussed in {{intro}}, this can \r\nbe used for hybrid key exchange, which, in effect, is layering TLS over a secondary AKE. \r\nAlthough the key exchanges are interleaved, the post-quantum AKE completes first, as demonstrated \r\nby its output key being used as an input for computing TLS's master secret.\r\n```",
+              "createdAt": "2020-12-03T18:07:25Z",
+              "updatedAt": "2020-12-04T00:06:29Z"
+            },
+            {
+              "originalPosition": 30,
+              "body": "```suggestion\r\nimplementations of things such as semi-static DH {{?I-D.ietf-tls-semistatic-dh}}. The aim of this draft is to be\r\n```",
+              "createdAt": "2020-12-03T18:08:09Z",
+              "updatedAt": "2020-12-04T00:06:29Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
